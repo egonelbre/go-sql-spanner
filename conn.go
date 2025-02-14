@@ -859,6 +859,7 @@ func (c *conn) resetTransactionForRetry(ctx context.Context, errDuringCommit boo
 			return noTransaction()
 		}
 		c.tx = c.prevTx
+		c.prevTx = nil
 		c.resetForRetry = true
 	} else if c.tx == nil {
 		return noTransaction()

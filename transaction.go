@@ -334,6 +334,7 @@ func (tx *readWriteTransaction) retry(ctx context.Context) (err error) {
 		tx.logger.Log(ctx, slog.LevelDebug, "retrying statement", "stmt", stmt)
 		err = stmt.retry(ctx, tx.rwTx)
 		if err != nil {
+			tx.rwTx.Rollback(ctx)
 			tx.logger.Log(ctx, slog.LevelDebug, "retrying statement failed", "stmt", stmt)
 			return err
 		}
